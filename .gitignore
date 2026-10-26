@@ -7,15 +7,25 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Firebase (local / emulators)
+/firebase-debug.log
+/firebase-debug.*.log
+.firebaserc
+/firebase-*.zip
+/.firebase/
+/emulator-ui/
+
 node_modules
 dist
 dist-ssr
 *.local
+
+# Environment (never commit secrets)
 .env
 .env.*
 !.env.example
 
-# Editor directories and files
+# Editor
 .vscode/*
 !.vscode/extensions.json
 .idea
