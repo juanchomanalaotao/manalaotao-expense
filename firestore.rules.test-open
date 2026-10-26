@@ -1,0 +1,13 @@
+rules_version = '2';
+
+// TEMPORARY TEST ONLY — i-publish ng 2 minuto para i-diagnose.
+// Kung gumana ang "Subukan Firebase", ang problema ay Rules o auth.
+// Pagkatapos, ibalik ang `firestore.rules` (may request.auth != null) at Publish ulit.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
