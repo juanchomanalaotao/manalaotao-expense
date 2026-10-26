@@ -15,7 +15,6 @@ import {
   permissionDeniedHelp,
   prepareAuthForFirestore,
 } from './firebase'
-import { testFirebaseWrite } from './firebaseHealth'
 import { loadData, newId } from './storage'
 
 const HOUSEHOLD_ID_KEY = 'daily-expense-household-id'
@@ -48,14 +47,7 @@ function mapFirestoreError(err: unknown): string {
 
 async function enrichPermissionError(err: unknown): Promise<Error> {
   if (err instanceof FirebaseError && err.code === 'permission-denied') {
-    try {
-      await testFirebaseWrite()
-    } catch (inner) {
-      return inner instanceof Error ? inner : new Error(permissionDeniedHelp())
-    }
-    return new Error(
-      `${permissionDeniedHelp()} (Kakaibang error — basahin ang FIREBASE_FIX.md sa project.)`,
-    )
+    return new Error(permissionDeniedHelp())
   }
   return new Error(mapFirestoreError(err))
 }
@@ -245,5 +237,3 @@ export function subscribeHousehold(
     (err) => onError(mapFirestoreError(err)),
   )
 }
-
-export { testFirebaseWrite } from './firebaseHealth'

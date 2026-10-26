@@ -1068,20 +1068,3 @@
   font-size: 1.1rem;
   font-weight: 800;
 }
-
-.firebase-debug {
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px dashed var(--border);
-}
-
-.firebase-debug .hint {
-  margin: 0 0 0.65rem;
-  line-height: 1.45;
-}
-
-.ok-text {
-  color: #047857 !important;
-  font-weight: 600;
-  margin-top: 0.5rem !important;
-}

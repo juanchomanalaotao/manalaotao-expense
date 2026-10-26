@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ensureSignedIn,
   getFirebaseAuth,
-  getProjectId,
   isFirebaseConfigured,
   permissionDeniedHelp,
 } from '../lib/firebase'
@@ -161,10 +160,8 @@ export function useSharedBudget() {
     syncStatus,
     syncError,
     firebaseOn,
-    firebaseProjectId: getProjectId(),
     inviteCode,
     householdId,
-    uid,
     createHousehold: handleCreateHousehold,
     joinHousehold: handleJoinHousehold,
     leaveSharedBudget,

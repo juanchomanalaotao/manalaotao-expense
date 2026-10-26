@@ -1,9 +1,14 @@
 rules_version = '2';
 
+// COPY-PASTE buong file na ito sa Firebase Console → Firestore → Rules → Publish
+// Dapat makita mo ang "Last published" na timestamp pagkatapos.
+
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Lahat ng naka-login (kasama Anonymous) — sapat para sa app na ito
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if request.auth != null;
     }
   }
 }

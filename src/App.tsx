@@ -59,8 +59,6 @@ function App() {
     joinHousehold,
     leaveSharedBudget,
     authReady,
-    firebaseProjectId,
-    uid,
   } = useSharedBudget()
 
   const [tab, setTab] = useState<Tab>('home')
@@ -126,8 +124,6 @@ function App() {
     return (
       <HouseholdGate
         busy={!authReady}
-        projectId={firebaseProjectId}
-        uid={uid}
         onCreate={async () => {
           const result = await createHousehold()
           setNewInviteCode(result.inviteCode)

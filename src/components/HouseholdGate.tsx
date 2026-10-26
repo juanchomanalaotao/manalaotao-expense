@@ -1,31 +1,20 @@
 import { useState } from 'react'
-import { testFirebaseWrite } from '../lib/household'
 import '../App.css'
 
 type Props = {
   onCreate: () => Promise<void>
   onJoin: (code: string) => Promise<void>
   busy: boolean
-  projectId: string
-  uid: string | null
 }
 
-export function HouseholdGate({
-  onCreate,
-  onJoin,
-  busy,
-  projectId,
-  uid,
-}: Props) {
+export function HouseholdGate({ onCreate, onJoin, busy }: Props) {
   const [mode, setMode] = useState<'choose' | 'join'>('choose')
   const [code, setCode] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [testOk, setTestOk] = useState<string | null>(null)
 
   async function handleCreate() {
     setError(null)
-    setTestOk(null)
     setLoading(true)
     try {
       await onCreate()
@@ -39,26 +28,11 @@ export function HouseholdGate({
   async function handleJoin(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
-    setTestOk(null)
     setLoading(true)
     try {
       await onJoin(code)
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Hindi makasali.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function handleTestFirebase() {
-    setError(null)
-    setTestOk(null)
-    setLoading(true)
-    try {
-      const r = await testFirebaseWrite()
-      setTestOk(`OK — project ${r.projectId}, user ${r.uid.slice(0, 8)}…`)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Test failed.')
     } finally {
       setLoading(false)
     }
@@ -80,34 +54,11 @@ export function HouseholdGate({
               letterSpacing: '-0.03em',
             }}
           >
-            I-share sa asawa
+            Share your Budget with your Partner
           </h1>
         </div>
 
         <div className="setup-card">
-          <div className="firebase-debug">
-            <p className="hint">
-              <strong>Project:</strong> {projectId || '(walang .env)'}
-              <br />
-              <strong>Login:</strong>{' '}
-              {uid ? `Anonymous (${uid.slice(0, 8)}…)` : busy ? 'Kumokonekta…' : 'Hindi pa'}
-            </p>
-            <button
-              type="button"
-              className="btn ghost full"
-              disabled={loading || busy}
-              onClick={handleTestFirebase}
-            >
-              Subukan Firebase (test write)
-            </button>
-            {testOk && <p className="hint ok-text">{testOk}</p>}
-            <p className="hint">
-              Kung permission denied pa rin, buksan ang{' '}
-              <strong>FIREBASE_FIX.md</strong> sa project folder (App Check + Rules
-              Publish).
-            </p>
-          </div>
-
           {mode === 'choose' ? (
             <>
               <h2 className="setup-card-title">Parehong budget, dalawang phone</h2>
